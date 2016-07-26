@@ -1,0 +1,23 @@
+image: docker:git
+services:
+- docker:dind
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+
+
+clone_trusty:
+  script:
+    - docker pull ubuntu:trusty
+    - docker tag ubuntu:trusty registry.gitlab.com/gbraad/ubuntu:trusty
+    - docker push registry.gitlab.com/gbraad/ubuntu:trusty
+  only:
+    - master
+
+clone_xenial:
+  script:
+    - docker pull ubuntu:xenial
+    - docker tag ubuntu:xenial registry.gitlab.com/gbraad/ubuntu:xenial
+    - docker push registry.gitlab.com/gbraad/ubuntu:xenial
+  only:
+    - master
